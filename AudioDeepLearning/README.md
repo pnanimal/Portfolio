@@ -38,14 +38,14 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/AudioSample.png" align: center>
 </p></center>
-<b>Figure 1. Visual representation of one of the audio samples.</b>
+<b>Figure 1. Visual representation of one of the audio samples.</b><BR>
 <BR><BR>
 <P>Two times indicating the beginning and end of the signal were also provided to extract the relevant audio for classification as well as minimum and maximum frequencies.  Species were labeled by integer values between 0-23. Some species had fewer samples than others (Figure 2). Lack of available RAM made augmenting these to the majority class which had 100 samples to be impossible. Rather, species which had less than 50 recordings were augmented to 50 samples.
   </P>  
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/Orig_Sampling.png" align: center>
 </p></center>
-  <b>Figure 2. Original sampling of species.</b>
+  <b>Figure 2. Original sampling of species.</b><BR>
 <BR><BR><P>
   The data were cut to the min/max times in some cases, and in some cases had additional time subtracted from the start time to increase the total recording time, depending on which choice was randomly selected during augmentation.</p>
   <h2> Data Augmentation</h2><BR>
@@ -54,27 +54,27 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/NoiseDict.png" align: center>
 </p></center>
-<b>Figure 3.Noise dictionary #1 with (upper left) background noise extracted from one of the audio recordings, (upper right) #2 the original noise with random noise added to it, (center left) #3 the original noise with random noise subtracted from it, (center right) is #1 reversed in time, (bottom left) is #2 reversed in time and (bottom right) #3 reversed in time.</b> 
-<p>If a number between 7-12 was selected by numpy.random(), then the minimum time was decreased by 1 second, lengthening the audio signal time. If a number between 13-18 is generated, then the audio signal mimics a bird or frog calling twice, an event that does occur in the training data. This process is repeated until each species has at least 50 samples in the training data (Figure 4).</p>
+<b>Figure 3. Noise dictionary #1 with (upper left) background noise extracted from one of the audio recordings, (upper right) #2 the original noise with random noise added to it, (center left) #3 the original noise with random noise subtracted from it, (center right) is #1 reversed in time, (bottom left) is #2 reversed in time and (bottom right) #3 reversed in time.</b> <BR>
+<p>If a number between 7-12 was selected by numpy.random(), then the minimum time was decreased by 1 second, lengthening the audio signal time. If a number between 13-18 is generated, then the audio signal mimics a bird or frog calling twice, an event that does occur in the training data. This process is repeated until each species has at least 50 samples in the training data (Figure 4).</p><br>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/Aug_Sampling.png" align: center>
 </p></center>
-  <b>Figure 4. Species sampling after augmentation. </b>
+  <b>Figure 4. Species sampling after augmentation. </b><BR><BR>
 <p>After augmentation, the training data was split into train and test data using a 75-25% split with stratification to account for remaining imbalances. The resulting training data was again split into train and validation data using another 75-25% split.</p>
   <h2> Feature Extraction</h2>
   <p>    Audio features had to be prepared differently for input into each of the ANN/CNN/RNN architectures. The following features were extracted using librosa for use in the modeling and modified as described below. The first axis for the input to the CNN corresponds to the audio sample. Spectral bandwidth (Figure 5), chroma spectrogram (Figure 6) and the spectral centroid (Figure 7) were all normalized individually, repeated and padded (Figure 8) and then combined into the second axis in a 4D array (Figure 9). The third axis contained the spectrogram (Figure 10), the fourth contained the MFCCs (Figure 11). Each axis was repeated and padded so that the final 3 slices were identical in size (Figure 12). </p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/Spec_bw.png" align: center>
 </p></center>
-<b>Figure 5. Spectral bandwidth computed from the audio file in Figure 1.</b>
+<b>Figure 5. Spectral bandwidth computed from the audio file in Figure 1.</b><BR>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/chroma_stft.png" align: center>
 </p></center>
-<b>Figure 6. </b>Chroma temperature computed from the audio file in Figure 1.
+<b>Figure 6. Chroma temperature computed from the audio file in Figure 1.</b><BR>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/Spec_centroid.png" align: center>
 </p></center>
-<b>Figure 7. Spectral centroid computed from the audio file from Figure 1.</b>
+<b>Figure 7. Spectral centroid computed from the audio file from Figure 1.</b><BR>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/Padding.png" align: center>
 </p></center>
@@ -96,65 +96,65 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 </p></center>
 <b>Figure 12. The four axes for input into the CNN, after normalization, with the first axis corresponding to the audio files (left back), the second corresponding to the padded, reshaped features from Figure 9 (second from back), the spectrogram (second from front) and the MFCCs (front).</b>
 <p><h1>Modeling</h1></p>
-<p><h2>ANN</p>
+<p><h2>ANN</h2></p>
 <p> The ANN consisted of a layer of 256 hidden nodes connected to the input followed by several additional dense layers with relu activation functions, interspersed with three dropout layers to prevent overfitting the data (Figure 13).  Because an ANN does not preserve spatial information, only the axis corresponding to the padded spectral bandwidth, chroma temperature and spectral centroid were input into the ANN. The spectrogram and MFCCs in particular, have unique features defined spatially. <i>Sending all of the data confused the network and resulted in accuracy levels in the single digits</i>. The net was run using the Adam optimizer for accuracy over 30 epochs. The last layer outputs 24 softmax outputs, corresponding to each of the 24 different species. 
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/ANNmodel.png" align: center>
 </p></center>
-<b>Figure 13. ANN Model architecture.<b>
+<b>Figure 13. ANN Model architecture.<b><BR>
 <p>    On the training data, the ANN achieved 91.5% accuracy, and on the test data, it achieved 93.4% accuracy. The confusion matrix (Figure 14) showed that the net had the most problems with species 12, where it misclassified 5 audio files. Species12 was not one of the rarest species nor was it augmented. Further investigation is needed to understand why the network had a problem classifying this particular species.  A perfect result would have predictions for each species only along the diagonal.</p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/ANNConfusionMatrix.png" align: center>
 </p></center>
-<b>Figure 14. ANN confusion matrix.</b>
+<b>Figure 14. ANN confusion matrix.</b><BR>
 <p>Upon inspecting the training and validation losses and accuracy, the ANN begins to overfit the training data after fifty epochs, but until that point, the net converges to a solution with errors decreasing in the validation data along with the training data (Figure 15).</b>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/ANNCharts.png" align: center>
 </p></center>
-<b>Figure 15. ANN losses and accuracy by epoch for training and validation datasets.</b>
+<b>Figure 15. ANN losses and accuracy by epoch for training and validation datasets.</b><BR>
 <h2>CNN</h2>
 <p> The CNN takes the input as a 4D numpy array (Figure 12) into a convolutional layer containing 32 hidden layers with relu activation functions (Figure 16). There are three convolutional layers,  two max pooling layers and three dropout layers, and the final layer outputs 24 softmax outputs, corresponding to the 24 species. The Adam optimizer is used over 20 epochs with a loss function to maximize accuracy.  </p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNmodel.png" align: center>
 </p></center>
-<b>Figure 16. CNN model architecture.</b>
-<p>The confusion matrix (Figure 17) shows that only one sample from species 9 and one from species 19 was misclassified. The accuracy on the training data was 96.4%, and on the test set was 96.7%.  The accuracy and losses behave similarly on both the validation and training sets (Figure 18).</b>
+<b>Figure 16. CNN model architecture.</b><BR>
+<p>The confusion matrix (Figure 17) shows that only one sample from species 9 and one from species 19 was misclassified. The accuracy on the training data was 96.4%, and on the test set was 96.7%.  The accuracy and losses behave similarly on both the validation and training sets (Figure 18).
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNConfusionMatrix.png" align: center>
 </p></center>
-<b>Figure 17. CNN confusion matrix.</b>
+<b>Figure 17. CNN confusion matrix.</b><BR>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNCharts.png" align: center>
 </p></center>
-<b>Figure 18. CNN losses and accuracy by epoch for training and validation datasets.</b>
+<b>Figure 18. CNN losses and accuracy by epoch for training and validation datasets.</b><BR>
 <h3>Additional CNN testing</h3>
 <p>Two more tests were run on the same CNN model. The first was to investigate the model behavior without species augmentation, which converged slightly faster than with augmentation, but to the same degree of accuracy (96.4% on the training and a slightly lower 95.1% on the test set). The final model uses augmentation to improve the robustness of the model for unseen data.</p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNChartNoAug.png" align: center>
 </p></center>
-<b>Figure 19. CNN model performance without species augmentation.</b>
-<p>    The second test was to investigate adding in transfer learning to see if results improved, which they did not. The Oxford VGG16 model, which achieved a high degree of accuracy in the ImageNet classification challenge was used on top of a series of dense layers. The layers of the VGG model were all set to trainable to allow for the adjustments of weights to fit this audio dataset. The training and test data were scaled to fall between 0 and 1 to allow for better integration with the data that was used in VGG16.</p>
+<b>Figure 19. CNN model performance without species augmentation.</b><BR>
+<p>The second test was to investigate adding in transfer learning to see if results improved, which they did not. The Oxford VGG16 model, which achieved a high degree of accuracy in the ImageNet classification challenge was used on top of a series of dense layers. The layers of the VGG model were all set to trainable to allow for the adjustments of weights to fit this audio dataset. The training and test data were scaled to fall between 0 and 1 to allow for better integration with the data that was used in VGG16.</p>
 <b>Figure 20. CNN model construction with transfer learning from the VGG16 model.</b>
 <p>The resulting model had three dense layers with a dropout layer in between after the VGG model in the final architecture (Figure 21).</b>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNmodelTL.png" align: center>
 </p></center>
-<b>Figure 21. CNN architecture using transfer learning from the VGG16 model.</b>
+<b>Figure 21. CNN architecture using transfer learning from the VGG16 model.</b><BR>
 <p>The model was run for 30 epochs but had slightly poorer performance than the stand-alone CNN model with a training accuracy of 89.5% and test accuracy of 95%. </p>
 <h3>RNN</h3>
 <p> Similar to the ANN, the RNN needed to have input modified from the CNN 4D tensor. This is because the RNN processes data in a sequence like speech or time sequences. For this reason, the RNN could not understand all of the different kinds of inputs, and performed well by using the axis that contained the MFCC’s (Figure 11) only. The RNN takes the MFCC input into a Long Short-Term Memory (LSTM) layer (Bengio, et. al., 1994) which carries information along a sequence, which in this case corresponds to time. This layer contains 250 hidden layers with relu activation functions (Figure 16). There are five dense layers, and four dropout layers to prevent overfitting the training data. The final layer outputs 24 softmax outputs, corresponding to the 24 species. The Adam optimizer is used over 40 epochs with a loss function to maximize accuracy.  The RNN achieved 94.6% accuracy on the training data and 93.0% accuracy on the test data.</p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNmodel.png" align: center>
 </p></center>
-<b>Figure 22. RNN model architecture.</b>
+<b>Figure 22. RNN model architecture.</b><BR>
 <p>    The confusion matrix shows that the RNN had the most trouble with species 16 with 3 misclassified audio samples, but had otherwise good performance, considering that, like ANN used only a portion of the data. </p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNConfusionMatrix.png" align: center>
 </p></center>
-<b>Figure 23. RNN confusion matrix.</b>
+<b>Figure 23. RNN confusion matrix.</b><BR>
 <p>    The RNN performed better on the validation dataset than it did on the training data, but the loss and accuracy showed that the algorithm converges around 40 epochs (Figure 24).</p>
 <p><center>
-<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNChart.png" align: center>
+<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNCharts.png" align: center>
 </p></center>
 <b>Figure 24. RNN losses and accuracy by epoch for training and validation datasets.</b>
 <h2>Conclusions and Future Work</h2>
