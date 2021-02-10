@@ -54,7 +54,7 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/NoiseDict.png" align: center>
 </p></center>
-<b>Figure 3. Noise dictionary #1 with (upper left) background noise extracted from one of the audio recordings, (upper right) #2 the original noise with random noise added to it, (center left) #3 the original noise with random noise subtracted from it, (center right) is #1 reversed in time, (bottom left) is #2 reversed in time and (bottom right) #3 reversed in time.</b> <BR>
+<b>Figure 3. Noise dictionary #1 with (upper left) background noise extracted from one of the audio recordings, (upper right) #2 the original noise with random noise added to it, (center left) #3 the original noise with random noise subtracted from it, (center right) is #1 reversed in time, (bottom left) is #2 reversed in time and (bottom right) #3 reversed in time.</b> <BR><BR>
 <p>If a number between 7-12 was selected by numpy.random(), then the minimum time was decreased by 1 second, lengthening the audio signal time. If a number between 13-18 is generated, then the audio signal mimics a bird or frog calling twice, an event that does occur in the training data. This process is repeated until each species has at least 50 samples in the training data (Figure 4).</p><br>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/Aug_Sampling.png" align: center>
@@ -101,13 +101,13 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/ANNmodel.png" align: center>
 </p></center>
-<b>Figure 13. ANN Model architecture.<b><BR>
-<p>    On the training data, the ANN achieved 91.5% accuracy, and on the test data, it achieved 93.4% accuracy. The confusion matrix (Figure 14) showed that the net had the most problems with species 12, where it misclassified 5 audio files. Species12 was not one of the rarest species nor was it augmented. Further investigation is needed to understand why the network had a problem classifying this particular species.  A perfect result would have predictions for each species only along the diagonal.</p>
+<b>Figure 13. ANN Model architecture.<b><BR><BR>
+<p>On the training data, the ANN achieved 91.5% accuracy, and on the test data, it achieved 93.4% accuracy. The confusion matrix (Figure 14) showed that the net had the most problems with species 12, where it misclassified 5 audio files. Species12 was not one of the rarest species nor was it augmented. Further investigation is needed to understand why the network had a problem classifying this particular species.  A perfect result would have predictions for each species only along the diagonal.</p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/ANNConfusionMatrix.png" align: center>
 </p></center>
 <b>Figure 14. ANN confusion matrix.</b><BR>
-<p>Upon inspecting the training and validation losses and accuracy, the ANN begins to overfit the training data after fifty epochs, but until that point, the net converges to a solution with errors decreasing in the validation data along with the training data (Figure 15).</b>
+<p>Upon inspecting the training and validation losses and accuracy, the ANN begins to overfit the training data after fifty epochs, but until that point, the net converges to a solution with errors decreasing in the validation data along with the training data (Figure 15).
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/ANNCharts.png" align: center>
 </p></center>
@@ -117,7 +117,7 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNmodel.png" align: center>
 </p></center>
-<b>Figure 16. CNN model architecture.</b><BR>
+<b>Figure 16. CNN model architecture.</b><BR><BR>
 <p>The confusion matrix (Figure 17) shows that only one sample from species 9 and one from species 19 was misclassified. The accuracy on the training data was 96.4%, and on the test set was 96.7%.  The accuracy and losses behave similarly on both the validation and training sets (Figure 18).
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNConfusionMatrix.png" align: center>
@@ -132,10 +132,10 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNChartNoAug.png" align: center>
 </p></center>
-<b>Figure 19. CNN model performance without species augmentation.</b><BR>
+<b>Figure 19. CNN model performance without species augmentation.</b><BR><BR>
 <p>The second test was to investigate adding in transfer learning to see if results improved, which they did not. The Oxford VGG16 model, which achieved a high degree of accuracy in the ImageNet classification challenge was used on top of a series of dense layers. The layers of the VGG model were all set to trainable to allow for the adjustments of weights to fit this audio dataset. The training and test data were scaled to fall between 0 and 1 to allow for better integration with the data that was used in VGG16.</p>
-<b>Figure 20. CNN model construction with transfer learning from the VGG16 model.</b>
-<p>The resulting model had three dense layers with a dropout layer in between after the VGG model in the final architecture (Figure 21).</b>
+<b>Figure 20. CNN model construction with transfer learning from the VGG16 model.</b><BR>
+<p>The resulting model had three dense layers with a dropout layer in between after the VGG model in the final architecture (Figure 21).
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/CNNmodelTL.png" align: center>
 </p></center>
@@ -146,12 +146,12 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNmodel.png" align: center>
 </p></center>
-<b>Figure 22. RNN model architecture.</b><BR>
+<b>Figure 22. RNN model architecture.</b><BR><BR>
 <p>    The confusion matrix shows that the RNN had the most trouble with species 16 with 3 misclassified audio samples, but had otherwise good performance, considering that, like ANN used only a portion of the data. </p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNConfusionMatrix.png" align: center>
 </p></center>
-<b>Figure 23. RNN confusion matrix.</b><BR>
+<b>Figure 23. RNN confusion matrix.</b><BR><BR>
 <p>    The RNN performed better on the validation dataset than it did on the training data, but the loss and accuracy showed that the algorithm converges around 40 epochs (Figure 24).</p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNCharts.png" align: center>
