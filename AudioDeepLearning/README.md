@@ -163,6 +163,7 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <h2>Consulted Resources</h2>
 Bengio, Y., P. Simard, and P. Frasconi. "Long short-term memory." IEEE Trans. Neural Netw 5 (1994): 157-166.<BR>
 Chollet, F. Deep Learning with Python, 361, New York: Manning, 2018.<BR>
+Sarkar, D. Hands on Transfer learning with Python. Retrieved from https://github.com/dipanjanS/hands-on-transfer-learning-with-python on 2/7/21.<BR>
 IPython, an interactive shell used to play audio files.<BR>
 Joblib, a Python library used to save pickle files.<BR>
 Librosa, a Python library for audio analysis.<BR>
