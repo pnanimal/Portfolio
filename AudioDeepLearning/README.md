@@ -144,17 +144,17 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <h3>RNN</h3>
 <p> Similar to the ANN, the RNN needed to have input modified from the CNN 4D tensor. This is because the RNN processes data in a sequence like speech or time sequences. For this reason, the RNN could not understand all of the different kinds of inputs, and performed well by using the axis that contained the MFCC’s (Figure 11) only. The RNN takes the MFCC input into a Long Short-Term Memory (LSTM) layer (Bengio, et. al., 1994) which carries information along a sequence, which in this case corresponds to time. This layer contains 250 hidden layers with relu activation functions (Figure 16). There are five dense layers, and four dropout layers to prevent overfitting the training data. The final layer outputs 24 softmax outputs, corresponding to the 24 species. The Adam optimizer is used over 40 epochs with a loss function to maximize accuracy.  The RNN achieved 94.6% accuracy on the training data and 93.0% accuracy on the test data.</p>
 <p><center>
-<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNmodel.pn" align: center>
+<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNmodel.png" align: center>
 </p></center>
 <b>Figure 22. RNN model architecture.</b><BR><BR>
 <p>    The confusion matrix shows that the RNN had the most trouble with species 12 with 9 misclassified audio samples, but had otherwise good performance, considering that, like ANN used only a portion of the data. </p>
 <p><center>
-<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNConfusionMatrix.pn" align: center>
+<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNConfusionMatrix.png" align: center>
 </p></center>
 <b>Figure 23. RNN confusion matrix.</b><BR><BR>
 <p>    The RNN performed better on the validation dataset than it did on the training data, but the loss and accuracy showed that the algorithm converges around 40 epochs (Figure 24).</p>
 <p><center>
-<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNCharts.pn" align: center>
+<img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNCharts.png" align: center>
 </p></center>
 <b>Figure 24. RNN losses and accuracy by epoch for training and validation datasets.</b>
 <h2>Conclusions and Future Work</h2>
