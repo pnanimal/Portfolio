@@ -29,7 +29,7 @@ Springboard -- DSC
 
 Additional Jupyter Notebooks were used to investigate incorporating [transfer learning](https://github.com/pnanimal/Portfolio/blob/main/AudioDeepLearning/birdfrogcnnwtl.ipynb) from the University of Oxford’s VGG16 solution to the ImageNet challenge into the final CNN model, and running the CNN model [without augmentation](https://github.com/pnanimal/Portfolio/blob/main/AudioDeepLearning/birdfrogcnnnoaug.ipynb). These results were not used in the final models.
 
-<P>Overall, the ANN had the second best performance with <b>91.5% accuracy</b> on the training, and <b>93.4%</b> accuracy on the test set using a subset of the features. The CNN without transfer learning (augmentation didn’t change the final performance) had the best performance with an accuracy of <b?96.4%</b> on the training, and <b>96.7%</b> on the test set. The RNN using only the MFCC’s achieved an accuracy of <b>94.6%</b> on the training, and <b>93.0%</b> on the test set.
+<P>Overall, the ANN had the second best performance with <b>91.5% accuracy</b> on the training, and <b>93.4%</b> accuracy on the test set using a subset of the features. The CNN without transfer learning (augmentation didn’t change the final performance) had the best performance with an accuracy of <b?96.4%</b> on the training, and <b>96.7%</b> on the test set. The RNN using only the MFCC’s achieved an accuracy of <b>96.4%</b> on the training, and <b>93.4%</b> on the test set.
 </P>
 <p><h2>Exploratory Data Analysis</h2>
 <h3>Input Data</h3>
@@ -147,7 +147,7 @@ Additional Jupyter Notebooks were used to investigate incorporating [transfer le
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNmodel.png" align: center>
 </p></center>
 <b>Figure 22. RNN model architecture.</b><BR><BR>
-<p>    The confusion matrix shows that the RNN had the most trouble with species 16 with 3 misclassified audio samples, but had otherwise good performance, considering that, like ANN used only a portion of the data. </p>
+<p>    The confusion matrix shows that the RNN had the most trouble with species 12 with 9 misclassified audio samples, but had otherwise good performance, considering that, like ANN used only a portion of the data. </p>
 <p><center>
 <img src="https://github.com/pnanimal/Portfolio/blob/images/AudioDeepLearning/RNNConfusionMatrix.png" align: center>
 </p></center>
